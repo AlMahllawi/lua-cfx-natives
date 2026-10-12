@@ -209,10 +209,9 @@ ${aliases ? `${aliases}\n` : ""}`;
   }
 
   /**
-   * Array containing all natives that have pointers that aren't a return type
+   * Natives whose pointer params are inputs (e.g. a handle passed by reference) rather than extra return values
    */
-  // I didn't know what else to name it
-  private nonReturnPointerNatives: string[] = [
+  private inputPointerNatives: string[] = [
     // Entity*
     "DELETE_ENTITY",
     "SET_ENTITY_AS_NO_LONGER_NEEDED",
@@ -233,7 +232,7 @@ ${aliases ? `${aliases}\n` : ""}`;
     "_START_SHAPE_TEST_SURROUNDING_COORDS",
     // Blip*
     "REMOVE_BLIP",
-    //int*
+    // int*
     "SET_BIT",
     "CLEAR_BIT",
     "SET_SCALEFORM_MOVIE_AS_NO_LONGER_NEEDED",
@@ -243,12 +242,12 @@ ${aliases ? `${aliases}\n` : ""}`;
   ];
 
   /**
-   * Check if the native name is in nonReturnPointerNatives
+   * Check if the native name is in inputPointerNatives
    * @param name Name of the native
    * @returns boolean
    */
-  private isNonReturnPointerNative = (name: string): boolean => {
-    return this.nonReturnPointerNatives.includes(name);
+  private isInputPointerNative = (name: string): boolean => {
+    return this.inputPointerNatives.includes(name);
   };
 
   /**
@@ -261,7 +260,7 @@ ${aliases ? `${aliases}\n` : ""}`;
   };
 
   /**
-   * Returns the return types and params of the native with the pointers removed from the params and moved to the return types (except for non return pointer natives, which are defined in nonReturnPointerNatives or natives with the type "char")
+   * Returns the return types and params of the native with the pointers removed from the params and moved to the return types (except for natives defined in inputPointerNatives or natives with the type "char")
    * @param data Data of the native to convert the params from
    * @returns Array<string[], NativeParam[]>
    */
@@ -288,7 +287,7 @@ ${aliases ? `${aliases}\n` : ""}`;
       if (type.startsWith("const ")) type = type.substring("const ".length);
 
       if (
-        this.isNonReturnPointerNative(data.name) ||
+        this.isInputPointerNative(data.name) ||
         type.substring(-4) === "char"
       ) {
         params[i].type = type;
@@ -397,8 +396,6 @@ ${aliases ? `${aliases}\n` : ""}`;
     let baseDesc = description
       ? description.replace(/^/gm, "---")
       : "---This native does not have an official description.";
-
-    // Attach natives url;
     return `---**\`${namespace}\` \`${apiset}\`**  \n---[Native Documentation](${this.documentationUrl}${hash})  \n${baseDesc}`;
   };
 

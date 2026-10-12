@@ -27,18 +27,26 @@ function IsPlayerFlashingStarsAboutToDrop(player) end
 git clone https://github.com/overextended/rage-lua-natives.git
 cd rage-lua-natives
 bun install
-bun start
+bun start [native sets...]
+```
+
+Pass the native sets to generate. With none, `gta` and `rdr3` are generated. `cfx` is always included.
+
+```sh
+bun start            # cfx + gta + rdr3
+bun start gta        # cfx + gta
+bun start rdr3       # cfx + rdr3
 ```
 
 The natives are downloaded and written to `build/cfx/`, one `.lua` file per namespace:
 
-| Folder                  | Contents                       | Source                                                         |
-| ----------------------- | ------------------------------ | -------------------------------------------------------------- |
-| `build/cfx/GTAV`        | GTA V natives (FiveM)          | [static.cfx.re](https://static.cfx.re/natives/natives.json)    |
-| `build/cfx/RDR3`        | Red Dead Redemption 2 (RedM)   | [VORPCORE/RDR3natives](https://github.com/VORPCORE/RDR3natives) |
-| `build/cfx/CFX-NATIVE`  | CitizenFX natives (both games) | [static.cfx.re](https://static.cfx.re/natives/natives_cfx.json) |
+| Set    | Folder                 | Contents                     | Source                                                           |
+| ------ | ---------------------- | ---------------------------- | ---------------------------------------------------------------- |
+| `cfx`  | `build/cfx/CFX-NATIVE` | CitizenFX natives            | [static.cfx.re](https://static.cfx.re/natives/natives_cfx.json)  |
+| `gta`  | `build/cfx/GTAV`       | GTA V natives (FiveM)        | [static.cfx.re](https://static.cfx.re/natives/natives.json)      |
+| `rdr3` | `build/cfx/RDR3`       | Red Dead Redemption 2 (RedM) | [VORPCORE/RDR3natives](https://github.com/VORPCORE/RDR3natives)  |
 
-Running it again replaces the previous output.
+Running a set again replaces its previous output.
 
 ## Credits
 
