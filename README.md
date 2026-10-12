@@ -48,6 +48,36 @@ The natives are downloaded and written to `natives/`, one `.lua` file per namesp
 
 Running a set again replaces its previous output.
 
+## GitHub Actions
+
+Other repositories can generate the natives on a schedule with the reusable workflow, which replaces the generated sets in `path` and commits them:
+
+```yaml
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * SUN
+
+jobs:
+  natives:
+    permissions:
+      contents: write
+    uses: overextended/rage-lua-natives/.github/workflows/generate.yml@main
+    with:
+      native-sets: gta rdr3
+      path: library/natives
+```
+
+| Input            | Default                           | Description                                              |
+| ---------------- | --------------------------------- | -------------------------------------------------------- |
+| `native-sets`    | `gta`                             | Native sets to generate (`cfx` is always included)       |
+| `path`           | `library/natives`                 | Where to write the sets in the calling repository        |
+| `ref`            | `main`                            | Ref of this repository to generate with                  |
+| `commit`         | `true`                            | Commit and push, otherwise upload as a `natives` artifact |
+| `commit-message` | `ci: generate native definitions` | Message of the commit                                    |
+
+To push with something other than `GITHUB_TOKEN`, pass a `token` secret, or `app-id` and `app-private-key` secrets for a GitHub App.
+
 ## Credits
 
 - [citizenfx/natives](https://github.com/citizenfx/natives): FiveM and CFX native data
