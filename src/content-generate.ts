@@ -2,6 +2,7 @@ import { FilesBuilder } from "./files-builder";
 import { stripIndents } from "common-tags";
 import { GetNativeType, NativeDefinition, NativeParam } from "./types";
 import { terminal as term } from "terminal-kit";
+import { NativeParamOverrides, GlobalParamOverrides } from "./overrides";
 
 interface TemplateObject {
   desc: string;
@@ -158,7 +159,7 @@ ${aliases ? `${aliases}\n` : ""}`;
         const nativeParams: {
           luaDocs: string;
           params: string;
-        } = this.nativeParams(native);
+        } = this.nativeParams(native, nativeName);
 
         const functionTemplate = `function ${nativeName}(${nativeParams.params}) end`;
 
@@ -348,7 +349,8 @@ ${aliases ? `${aliases}\n` : ""}`;
    * @return JSON<String luaDocs, String params, String paramsWithType>
    */
   private nativeParams = (
-    data: NativeDefinition
+    data: NativeDefinition,
+    nativeName: string
   ): { luaDocs: string; params: string } => {
     /**
      * "luaDocs" Allows to save the generation of Lua annotations and return it
@@ -364,13 +366,18 @@ ${aliases ? `${aliases}\n` : ""}`;
 
       if (nativeParam.type.includes("*")) continue;
 
-      const convNativeType = GetNativeType(nativeParam.type, true);
+      const override = NativeParamOverrides[data.name]?.[nativeParam.name] || NativeParamOverrides[nativeName]?.[nativeParam.name] || GlobalParamOverrides[nativeParam.name];
+      const paramName = override?.name || nativeParam.name;
+      const convNativeType = override?.type || GetNativeType(nativeParam.type, true);
+
+      const isOptional = override?.optional || override?.defaultValue !== undefined;
+      const defaultValue = override?.defaultValue;
 
       luaDocs += `\n---@param ${this.fieldToReplace(
-        nativeParam.name
-      )} ${convNativeType}`;
+        paramName
+      )}${isOptional ? "?" : ""} ${convNativeType}${defaultValue !== undefined ? ` [default: ${defaultValue}]` : ""}`;
       params +=
-        (paramPos != 0 ? ", " : "") + this.fieldToReplace(nativeParam.name);
+        (paramPos != 0 ? ", " : "") + this.fieldToReplace(paramName);
       paramPos++;
     }
 
