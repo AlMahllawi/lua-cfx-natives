@@ -1,7 +1,6 @@
 import * as request from "request";
 import { FilesBuilder } from "./src/files-builder";
 import { ContentGenerate } from "./src/content-generate";
-import * as figlet from "figlet";
 import { GamesType } from "./src/enum/GamesType";
 import { terminal as term } from "terminal-kit";
 
@@ -37,7 +36,7 @@ export class Main {
   };
 
   /**
-   * Startup logicNom de la native fivem
+   * Startup logic
    *
    * @param dir Location of the file where the project will be built
    *
@@ -94,7 +93,7 @@ export class Main {
    *
    * @param stats
    * @param filename Name of the updated file
-   * @param nativename Name of the native fivem
+   * @param nativename Name of the native
    *
    * @return void
    */
@@ -109,13 +108,8 @@ export class Main {
   };
 }
 
-figlet("JetBrainIDE-CitizenFX", (err, data) => {
-  term.blue(data);
-  term.red("\n Dylan Malandain - @iTexZoz \n");
-});
-
 term.cyan(
-  "Welcome to the native completion generator tool for Jetbrain IDEs for cfx.re projects.\n"
+  "Generating Lua type annotations for FiveM and RedM natives.\n"
 );
 // term.cyan("Please select the game concerned.\n");
 
@@ -126,9 +120,9 @@ term.cyan(
 // ];
 
 (async () => {
+  await Main.onEnable("build/cfx/CFX-NATIVE", GamesType.Cfx);
   await Main.onEnable("build/cfx/GTAV", GamesType.GTA);
   await Main.onEnable("build/cfx/RDR3", GamesType.RDR3);
-  await Main.onEnable("build/cfx/CFX-NATIVE", GamesType.Cfx);
 
   process.exit();
 })();

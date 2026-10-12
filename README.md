@@ -1,35 +1,50 @@
 # rage-lua-natives
 
 ![TypeScript](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF)
+![Bun](https://shields.io/badge/Bun-000?logo=Bun&logoColor=FFF)
 ![License](https://img.shields.io/github/license/overextended/rage-lua-natives.svg)
-![OpenIssue](https://img.shields.io/github/issues/overextended/rage-lua-natives.svg?style=flat)
+![Open Issues](https://img.shields.io/github/issues/overextended/rage-lua-natives.svg?style=flat)
 
-### How to use this tool to generate / regenerate CitizenFX native ?
+Generates Lua type annotations for FiveM and RedM natives. To use the natives in your editor, install [fivem-lls-addon](https://github.com/overextended/fivem-lls-addon), which ships the generated output as a [Lua Language Server](https://luals.github.io) addon.
 
-# Attention this project requires the installation of NodeJS on the machine where you want to run it
+Each native becomes an annotated stub with its namespace, side (client/server), description, parameters, return types and a link to its documentation page:
 
-1) Git clone projet
-2) Open a terminal in the folder where it is located JetbrainIDE-CitizenFX.
-3) Execute the following command `npm i ` and wait.
-4) Execute `npm install -g ts-node`
-5) Execute `npm install -g typescript`
-6) Once the dependencies install install execute the following command to start the generation of natives `npm run start`
-7) Wait a few minutes, once the generation is finished nothing more to be written to a in your terminal, you will find a new folder named build, it is in this one that you find what you need.
-8) Make a new project in Intellij using EmmyLUA as SDK
-![image](https://user-images.githubusercontent.com/58150973/116157328-68852580-a70a-11eb-8ec9-7c51320f79bd.png)
+```lua
+---**`PLAYER` `client`**
+---[Native Documentation](https://docs.fivem.net/natives/?_0xAFAF86043E5874E9)
+---@param player integer
+---@return boolean
+function IsPlayerFlashingStarsAboutToDrop(player) end
+```
 
-9) Click on "+" for classpath and browse to "build" folder from step 7.
-![image](https://user-images.githubusercontent.com/58150973/116157677-07118680-a70b-11eb-82fe-6e72049d03a5.png)
+## Requirements
 
-![image](https://user-images.githubusercontent.com/58150973/116157701-11cc1b80-a70b-11eb-9b84-5d5df1ca7dac.png)
+- [Bun](https://bun.sh)
 
-10) Done. You can now access all the latest natives for FiveM directly into your code.
+## Usage
 
-![image](https://user-images.githubusercontent.com/58150973/116157791-32947100-a70b-11eb-8d3b-b9efa5a48784.png)
+```sh
+git clone https://github.com/overextended/rage-lua-natives.git
+cd rage-lua-natives
+bun install
+bun start
+```
 
+The natives are downloaded and written to `build/cfx/`, one `.lua` file per namespace:
 
-## Special Thank
+| Folder                  | Contents                       | Source                                                         |
+| ----------------------- | ------------------------------ | -------------------------------------------------------------- |
+| `build/cfx/GTAV`        | GTA V natives (FiveM)          | [static.cfx.re](https://static.cfx.re/natives/natives.json)    |
+| `build/cfx/RDR3`        | Red Dead Redemption 2 (RedM)   | [VORPCORE/RDR3natives](https://github.com/VORPCORE/RDR3natives) |
+| `build/cfx/CFX-NATIVE`  | CitizenFX natives (both games) | [static.cfx.re](https://static.cfx.re/natives/natives_cfx.json) |
 
-@CitizenFX (https://github.com/citizenfx/natives)  
-@alloc8or (https://github.com/alloc8or/rdr3-nativedb-data)  
-@VORPCORE (https://github.com/VORPCORE/RDR3natives/)
+Running it again replaces the previous output.
+
+## Credits
+
+- [citizenfx/natives](https://github.com/citizenfx/natives): FiveM and CFX native data
+- [VORPCORE/RDR3natives](https://github.com/VORPCORE/RDR3natives): RedM native data
+- [alloc8or/rdr3-nativedb-data](https://github.com/alloc8or/rdr3-nativedb-data): RDR3 native research
+- This project builds on earlier work, with each one forked from the one before it:
+  - [ImBaphomettt/rage-lua-types](https://github.com/ImBaphomettt/rage-lua-types) by Dylan Malandain, the original tool
+  - [TasoOneAsia/JetbrainIDE-CFX.RE](https://github.com/TasoOneAsia/JetbrainIDE-CFX.RE)

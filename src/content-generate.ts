@@ -29,7 +29,7 @@ export class ContentGenerate {
   private documentationUrl: string = "https://docs.fivem.net/natives/?_";
 
   /**
-   * Template to generate documentation and shortcuts for native speakers
+   * Template to generate the Lua annotations and function stub of a native
    *
    * @param description
    * @param param
@@ -110,7 +110,7 @@ ${aliases ? `${aliases}\n` : ""}`;
   /**
    * Allows to generate the native template in a procedural way one by one
    *
-   * @param data Request the result of the query to the API of the FiveM natives
+   * @param data Natives JSON, grouped by namespace
    *
    * @return void
    */
@@ -302,10 +302,10 @@ ${aliases ? `${aliases}\n` : ""}`;
   };
 
   /**
-   * `nativeName` is used to format and generate the name of the native return by the FiveM api
+   * `nativeName` is used to format and generate the name of the native returned by the natives JSON
    *
-   * @param data Request the result of the query to the API of the FiveM natives
-   * @param natives Request the result of the query to the API of the FiveM natives data[category]
+   * @param data Definition of the native
+   * @param natives Hash of the native, used when it has no name
    *
    * @return String
    */
@@ -342,9 +342,9 @@ ${aliases ? `${aliases}\n` : ""}`;
   };
 
   /**
-   * "nativeParams" Is used to generate the parameters of the native wish and its LUA documentation.
+   * "nativeParams" Is used to generate the parameters of the native and their Lua annotations.
    *
-   * @param data Request the result of the query to the API of the FiveM natives
+   * @param data Definition of the native
    *
    * @return JSON<String luaDocs, String params, String paramsWithType>
    */
@@ -352,7 +352,7 @@ ${aliases ? `${aliases}\n` : ""}`;
     data: NativeDefinition
   ): { luaDocs: string; params: string } => {
     /**
-     * "luaDocs" Allows to save the generation of LUA documentation and return it
+     * "luaDocs" Allows to save the generation of Lua annotations and return it
      *
      * "params" Allows to save the generation of the native parameters and to return it.
      */
@@ -379,11 +379,14 @@ ${aliases ? `${aliases}\n` : ""}`;
   };
 
   /**
-   * `nativeDescription` Allows to check if a description exists on the native wish and therefore returned a different result according to the natives
+   * `nativeDescription` Allows to check if a description exists on the native and therefore returns a different result according to the natives
    *
-   * @param data Request the result of the query to the API of the FiveM natives
+   * @param description Description of the native
+   * @param hash Hash of the native, appended to the documentation url
+   * @param namespace Namespace of the native
+   * @param apiset Side the native runs on (client/server)
    *
-   * @return String Returns the description of the native or a prefect text indicating the lack of official description
+   * @return String Returns the description of the native or a predefined text indicating the lack of official description
    */
   private nativeDescription = (
     description: string,
@@ -402,7 +405,7 @@ ${aliases ? `${aliases}\n` : ""}`;
   /**
    * `nativeUsage` Allows to automatically generate the native's usage pattern with all the details necessary for an instant understanding
    *
-   * @param data Request the result of the query to the API of the FiveM natives
+   * @param data Definition of the native
    * @param nativeParams Results generated from the nativeParams() function of the class [[ContentGenerate]]
    *
    * @return string Returns the predefined pattern
