@@ -193,7 +193,7 @@ ${aliases ? `${aliases}\n` : ""}`;
             `Generated ${namespaceTotal} native declarations for ${namespace}\n`
           );
         })
-        .catch(term.red);
+        .catch((err) => term.red(`${err}\n`));
     }
 
     term.green(`Generated ${nativeTotal} native declarations\n`);

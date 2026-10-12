@@ -69,7 +69,7 @@ export class Main {
         try {
           await builder.generateTemplate(json);
         } catch (err) {
-          term.red(err);
+          term.red(`${err}\n`);
         } finally {
           resolve();
         }
@@ -85,7 +85,7 @@ export class Main {
    * @return void
    */
   public static onFolderGenerate = (response: void) => {
-    term.cyan("Create build directory successfully : " + response);
+    term.cyan("Create build directory successfully : " + response + "\n");
   };
 
   /**
