@@ -85,7 +85,7 @@ export class Main {
    * @return void
    */
   public static onFolderGenerate = (response: void) => {
-    term.cyan("Create build directory successfully : " + response + "\n");
+    term.cyan("Create output directory successfully : " + response + "\n");
   };
 
   /**
@@ -113,9 +113,9 @@ term.cyan(
 );
 
 const nativeSets: Record<string, [string, NativeSet]> = {
-  cfx: ["build/cfx/CFX-NATIVE", NativeSet.Cfx],
-  gta: ["build/cfx/GTAV", NativeSet.GTA],
-  rdr3: ["build/cfx/RDR3", NativeSet.RDR3],
+  cfx: ["natives/CFX-NATIVE", NativeSet.Cfx],
+  gta: ["natives/GTAV", NativeSet.GTA],
+  rdr3: ["natives/RDR3", NativeSet.RDR3],
 };
 
 const selected = process.argv.slice(2).map((arg) => arg.toLowerCase());

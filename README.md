@@ -38,13 +38,13 @@ bun start gta        # cfx + gta
 bun start rdr3       # cfx + rdr3
 ```
 
-The natives are downloaded and written to `build/cfx/`, one `.lua` file per namespace:
+The natives are downloaded and written to `natives/`, one `.lua` file per namespace:
 
-| Set    | Folder                 | Contents                     | Source                                                           |
-| ------ | ---------------------- | ---------------------------- | ---------------------------------------------------------------- |
-| `cfx`  | `build/cfx/CFX-NATIVE` | CitizenFX natives            | [static.cfx.re](https://static.cfx.re/natives/natives_cfx.json)  |
-| `gta`  | `build/cfx/GTAV`       | GTA V natives (FiveM)        | [static.cfx.re](https://static.cfx.re/natives/natives.json)      |
-| `rdr3` | `build/cfx/RDR3`       | Red Dead Redemption 2 (RedM) | [VORPCORE/RDR3natives](https://github.com/VORPCORE/RDR3natives)  |
+| Set    | Folder               | Contents                     | Source                                                           |
+| ------ | -------------------- | ---------------------------- | ---------------------------------------------------------------- |
+| `cfx`  | `natives/CFX-NATIVE` | CitizenFX natives            | [static.cfx.re](https://static.cfx.re/natives/natives_cfx.json)  |
+| `gta`  | `natives/GTAV`       | GTA V natives (FiveM)        | [static.cfx.re](https://static.cfx.re/natives/natives.json)      |
+| `rdr3` | `natives/RDR3`       | Red Dead Redemption 2 (RedM) | [VORPCORE/RDR3natives](https://github.com/VORPCORE/RDR3natives)  |
 
 Running a set again replaces its previous output.
 
