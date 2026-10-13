@@ -366,7 +366,7 @@ ${aliases ? `${aliases}\n` : ""}`;
 
       if (nativeParam.type.includes("*")) continue;
 
-      const override = NativeParamOverrides[data.name]?.[nativeParam.name] || NativeParamOverrides[nativeName]?.[nativeParam.name] || GlobalParamOverrides[nativeParam.name];
+      const override = NativeParamOverrides[data.name]?.[i] || NativeParamOverrides[nativeName]?.[i] || GlobalParamOverrides[nativeParam.name];
       const paramName = override?.name || nativeParam.name;
       const convNativeType = override?.type || GetNativeType(nativeParam.type, true);
 

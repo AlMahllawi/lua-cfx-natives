@@ -5,15 +5,15 @@ export interface ParamOverride {
     defaultValue?: string | number | boolean;
 }
 
-export const NativeParamOverrides: Record<string, Record<string, ParamOverride>> = {
+export const NativeParamOverrides: Record<string, Record<number, ParamOverride>> = {
     "IsPedInAnyVehicle": {
-        "atGetIn": { defaultValue: false }
+        1: { defaultValue: false } // atGetIn
     },
     "GetVehiclePedIsIn": {
-        "lastVehicle": { defaultValue: false }
+        1: { defaultValue: false } // lastVehicle
     },
     "GetResourceMetadata": {
-        "index": { defaultValue: 0 }
+        2: { defaultValue: 0 } // index
     }
 };
 
