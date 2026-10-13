@@ -1,5 +1,5 @@
 {
-  "name": "rage-lua-natives",
+  "name": "lua-cfx-natives",
   "version": "1.0.0",
   "description": "Generates Lua type annotations for FiveM and RedM natives.",
   "main": "main.ts",
@@ -19,7 +19,7 @@
   "license": "GPL-3.0-only",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/overextended/rage-lua-natives.git"
+    "url": "git+https://github.com/AlMahllawi/lua-cfx-natives.git"
   },
   "devDependencies": {
     "@types/bun": "^1.4.3",

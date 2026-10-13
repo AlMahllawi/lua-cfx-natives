@@ -12,7 +12,7 @@ on:
         type: string
         default: library/natives
       ref:
-        description: Ref of rage-lua-natives to generate with
+        description: Ref of lua-cfx-natives to generate with
         type: string
         default: main
       commit:
@@ -53,12 +53,12 @@ jobs:
         with:
           token: ${{ steps.app_token.outputs.token || secrets.token || github.token }}
 
-      - name: Checkout rage-lua-natives
+      - name: Checkout lua-cfx-natives
         uses: actions/checkout@v7
         with:
-          repository: overextended/rage-lua-natives
+          repository: AlMahllawi/lua-cfx-natives
           ref: ${{ inputs.ref }}
-          path: .rage-lua-natives
+          path: .lua-cfx-natives
 
       - name: Install Bun
         uses: oven-sh/setup-bun@v2
@@ -66,7 +66,7 @@ jobs:
           bun-version: latest
 
       - name: Generate natives
-        working-directory: .rage-lua-natives
+        working-directory: .lua-cfx-natives
         env:
           NATIVE_SETS: ${{ inputs.native-sets }}
         run: |
@@ -78,12 +78,12 @@ jobs:
           OUTPUT_PATH: ${{ inputs.path }}
         run: |
           mkdir -p "${OUTPUT_PATH:?}"
-          for dir in .rage-lua-natives/natives/*/; do
+          for dir in .lua-cfx-natives/natives/*/; do
             name=$(basename "$dir")
             rm -rf "${OUTPUT_PATH:?}/${name:?}"
             mv "$dir" "$OUTPUT_PATH/$name"
           done
-          rm -rf .rage-lua-natives
+          rm -rf .lua-cfx-natives
 
       - name: Commit and push
         if: inputs.commit

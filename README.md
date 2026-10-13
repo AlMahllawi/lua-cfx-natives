@@ -1,11 +1,11 @@
-# rage-lua-natives
+# lua-cfx-natives
 
 ![TypeScript](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF)
 ![Bun](https://shields.io/badge/Bun-000?logo=Bun&logoColor=FFF)
-![License](https://img.shields.io/github/license/overextended/rage-lua-natives.svg)
-![Open Issues](https://img.shields.io/github/issues/overextended/rage-lua-natives.svg?style=flat)
+![License](https://img.shields.io/github/license/AlMahllawi/lua-cfx-natives.svg)
+![Open Issues](https://img.shields.io/github/issues/AlMahllawi/lua-cfx-natives.svg?style=flat)
 
-Generates Lua type annotations for FiveM and RedM natives. To use the natives in your editor, install [fivem-lls-addon](https://github.com/overextended/fivem-lls-addon), which ships the generated output as a [Lua Language Server](https://luals.github.io) addon.
+Generates Lua type annotations for FiveM and RedM natives. To use the natives in your editor, install [cfx-luals-addon](https://github.com/AlMahllawi/cfx-luals-addon), which ships the generated output as a [Lua Language Server](https://luals.github.io) addon.
 
 Each native becomes an annotated stub with its namespace, side (client/server), description, parameters, return types and a link to its documentation page:
 
@@ -24,8 +24,8 @@ function IsPlayerFlashingStarsAboutToDrop(player) end
 ## Usage
 
 ```sh
-git clone https://github.com/overextended/rage-lua-natives.git
-cd rage-lua-natives
+git clone https://github.com/AlMahllawi/lua-cfx-natives.git
+cd lua-cfx-natives
 bun install
 bun start [native sets...]
 ```
@@ -62,7 +62,7 @@ jobs:
   natives:
     permissions:
       contents: write
-    uses: overextended/rage-lua-natives/.github/workflows/generate.yml@main
+    uses: AlMahllawi/lua-cfx-natives/.github/workflows/generate.yml@main
     with:
       native-sets: gta rdr3
       path: library/natives
@@ -86,3 +86,4 @@ To push with something other than `GITHUB_TOKEN`, pass a `token` secret, or `app
 - This project builds on earlier work, with each one forked from the one before it:
   - [ImBaphomettt/rage-lua-types](https://github.com/ImBaphomettt/rage-lua-types) by Dylan Malandain, the original tool
   - [TasoOneAsia/JetbrainIDE-CFX.RE](https://github.com/TasoOneAsia/JetbrainIDE-CFX.RE)
+  - [overextended/rage-lua-natives](https://github.com/overextended/rage-lua-natives)

@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "rage-lua-natives",
+      "name": "lua-cfx-natives",
       "dependencies": {
         "common-tags": "^1.8.2",
         "fs-extra": "^11.4.1",
