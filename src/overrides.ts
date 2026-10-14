@@ -1,8 +1,7 @@
 export interface ParamOverride {
     name?: string;
     type?: string;
-    optional?: boolean;
-    defaultValue?: string | number | boolean;
+    defaultValue?: string | number | boolean | null;
 }
 
 export const NativeParamOverrides: Record<string, Record<number, ParamOverride>> = {

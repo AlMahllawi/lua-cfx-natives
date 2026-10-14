@@ -370,12 +370,12 @@ ${aliases ? `${aliases}\n` : ""}`;
       const paramName = override?.name || nativeParam.name;
       const convNativeType = override?.type || GetNativeType(nativeParam.type, true);
 
-      const isOptional = override?.optional || override?.defaultValue !== undefined;
       const defaultValue = override?.defaultValue;
+      const isOptional = defaultValue !== undefined;
 
       luaDocs += `\n---@param ${this.fieldToReplace(
         paramName
-      )}${isOptional ? "?" : ""} ${convNativeType}${defaultValue !== undefined ? ` [default: ${defaultValue}]` : ""}`;
+      )}${isOptional ? "?" : ""} ${convNativeType}${isOptional && defaultValue !== null ? ` [default: ${defaultValue}]` : ""}`;
       params +=
         (paramPos != 0 ? ", " : "") + this.fieldToReplace(paramName);
       paramPos++;
