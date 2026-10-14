@@ -1,6 +1,11 @@
+import { NativeSet } from "./enum/NativeSet";
+
+// TODO: Replace with a union of supported Lua types
+export type LuaType = string;
+
 export interface ParamOverride {
     name?: string;
-    type?: string;
+    type?: LuaType;
     defaultValue?: string | number | boolean | null;
 }
 
@@ -16,6 +21,10 @@ export const NativeParamOverrides: Record<string, Record<number, ParamOverride>>
     }
 };
 
-export const GlobalParamOverrides: Record<string, ParamOverride> = {
-    "playerSrc": { type: "integer|string" }
+export type GlobalParamOverride = Pick<ParamOverride, "type" | "defaultValue">;
+
+export const GlobalParamOverrides: Partial<Record<NativeSet, Record<string, GlobalParamOverride>>> = {
+    [NativeSet.Cfx]: {
+        "playerSrc": { type: "integer|string" }
+    }
 };

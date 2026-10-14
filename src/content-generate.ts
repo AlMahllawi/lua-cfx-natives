@@ -3,6 +3,7 @@ import { stripIndents } from "common-tags";
 import { GetNativeType, NativeDefinition, NativeParam } from "./types";
 import { terminal as term } from "terminal-kit";
 import { NativeParamOverrides, GlobalParamOverrides } from "./overrides";
+import { NativeSet } from "./enum/NativeSet";
 
 interface TemplateObject {
   desc: string;
@@ -18,6 +19,11 @@ export class ContentGenerate {
    * Instance of the object [[FilesBuilder]]
    */
   private filesBuilder: FilesBuilder;
+
+  /**
+   * Native set being generated, used to scope global overrides
+   */
+  private nativeSet: NativeSet;
 
   /**
    * Instance of a generated documentation
@@ -83,9 +89,11 @@ ${aliases ? `${aliases}\n` : ""}`;
    * Builder allowing the instance of difference objects / utility values for the generation of the template as well as the update of the file to contain the native
    *
    * @param filesBuilder Class instance [[FilesBuilder]]
+   * @param nativeSet Native set being generated
    */
-  constructor(filesBuilder: FilesBuilder) {
+  constructor(filesBuilder: FilesBuilder, nativeSet: NativeSet) {
     this.filesBuilder = filesBuilder;
+    this.nativeSet = nativeSet;
   }
 
   /**
@@ -366,11 +374,12 @@ ${aliases ? `${aliases}\n` : ""}`;
 
       if (nativeParam.type.includes("*")) continue;
 
-      const override = NativeParamOverrides[data.name]?.[i] || NativeParamOverrides[nativeName]?.[i] || GlobalParamOverrides[nativeParam.name];
+      const override = NativeParamOverrides[data.name]?.[i] || NativeParamOverrides[nativeName]?.[i];
       const paramName = override?.name || nativeParam.name;
-      const convNativeType = override?.type || GetNativeType(nativeParam.type, true);
+      const globalOverride = GlobalParamOverrides[this.nativeSet]?.[nativeParam.name];
+      const convNativeType = override?.type || globalOverride?.type || GetNativeType(nativeParam.type, true);
 
-      const defaultValue = override?.defaultValue;
+      const defaultValue = override?.defaultValue !== undefined ? override.defaultValue : globalOverride?.defaultValue;
       const isOptional = defaultValue !== undefined;
 
       luaDocs += `\n---@param ${this.fieldToReplace(

@@ -62,7 +62,7 @@ export class Main {
 
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        const builder = new ContentGenerate(files).setDocumentationUrl(
+        const builder = new ContentGenerate(files, nativeSet).setDocumentationUrl(
           Main.getNativeDocsUrl(nativeSet)
         );
 
