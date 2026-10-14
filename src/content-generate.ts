@@ -374,12 +374,12 @@ ${aliases ? `${aliases}\n` : ""}`;
 
       if (nativeParam.type.includes("*")) continue;
 
-      const override = NativeParamOverrides[data.name]?.[i] || NativeParamOverrides[nativeName]?.[i];
+      const nativeOverrides = NativeParamOverrides[this.nativeSet];
+      const override = nativeOverrides?.[data.name]?.[i] || nativeOverrides?.[nativeName]?.[i];
       const paramName = override?.name || nativeParam.name;
-      const globalOverride = GlobalParamOverrides[this.nativeSet]?.[nativeParam.name];
-      const convNativeType = override?.type || globalOverride?.type || GetNativeType(nativeParam.type, true);
+      const convNativeType = override?.type || GlobalParamOverrides[this.nativeSet]?.[nativeParam.name] || GetNativeType(nativeParam.type, true);
 
-      const defaultValue = override?.defaultValue !== undefined ? override.defaultValue : globalOverride?.defaultValue;
+      const defaultValue = override?.defaultValue;
       const isOptional = defaultValue !== undefined;
 
       luaDocs += `\n---@param ${this.fieldToReplace(

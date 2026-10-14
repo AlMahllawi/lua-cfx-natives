@@ -9,22 +9,36 @@ export interface ParamOverride {
     defaultValue?: string | number | boolean | null;
 }
 
-export const NativeParamOverrides: Record<string, Record<number, ParamOverride>> = {
-    "IsPedInAnyVehicle": {
-        1: { defaultValue: false } // atGetIn
-    },
+type NativeOverrides = Record<string, Record<number, ParamOverride>>;
+
+const GetVehiclePedIsIn: NativeOverrides = {
     "GetVehiclePedIsIn": {
         1: { defaultValue: false } // lastVehicle
-    },
-    "GetResourceMetadata": {
-        2: { defaultValue: 0 } // index
     }
 };
 
-export type GlobalParamOverride = Pick<ParamOverride, "type" | "defaultValue">;
+// Shared between GTA and RDR3
+const GameOverrides: NativeOverrides = {
+    ...GetVehiclePedIsIn,
+    "IsPedInAnyVehicle": {
+        1: { defaultValue: false } // atGetIn
+    }
+};
 
-export const GlobalParamOverrides: Partial<Record<NativeSet, Record<string, GlobalParamOverride>>> = {
+export const NativeParamOverrides: Partial<Record<NativeSet, NativeOverrides>> = {
+    [NativeSet.GTA]: GameOverrides,
+    [NativeSet.RDR3]: GameOverrides,
     [NativeSet.Cfx]: {
-        "playerSrc": { type: "integer|string" }
+        ...GetVehiclePedIsIn,
+        "GetResourceMetadata": {
+            2: { defaultValue: 0 } // index
+        }
+    }
+};
+
+// Types only, a param with a default should include nil (e.g. "integer|nil")
+export const GlobalParamOverrides: Partial<Record<NativeSet, Record<string, LuaType>>> = {
+    [NativeSet.Cfx]: {
+        "playerSrc": "integer|string"
     }
 };
